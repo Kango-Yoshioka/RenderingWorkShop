@@ -51,8 +51,8 @@ struct Body {
 
 ```cpp
 class Image {
-    int width;
-    int height;
+    int resX;
+    int resY;
 
     Color *pixels;
 }

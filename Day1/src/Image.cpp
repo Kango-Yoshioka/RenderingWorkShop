@@ -5,8 +5,8 @@
 #include "Image.h"
 #include <iostream>
 
-Image::Image(const int &width, const int &height) : width(width), height(height) {
-    pixels = new Color[width * height];
+Image::Image(const int &resX, const int &resY) : resX(resX), resY(resY) {
+    pixels = new Color[resX * resY];
 }
 
 Image::~Image() {
@@ -25,9 +25,9 @@ void Image::save(const std::string &fname) const {
 }
 
 Image Image::apply_gamma_correction() const {
-    Image img(width, height);
+    Image img(resX, resY);
 
-    for(int i = 0; i < width * height; i++) {
+    for(int i = 0; i < resX * resY; i++) {
         for(int j = 0; j < 3; j++) {
             if(pixels[i][j] <= 0.0031308) img.pixels[i][j] = pixels[i][j] * 12.92;
             else img.pixels[i][j] = pow(pixels[i][j], 1.0 / 2.4) * 1.055 - 0.055;
@@ -41,7 +41,7 @@ void Image::reinhard_tone_mapping() const {
     /**
      * @ref https://64.github.io/tonemapping
      */
-    for(int i = 0; i < width * height; i++) {
+    for(int i = 0; i < resX * resY; i++) {
         for(int j = 0; j < 3; j++) {
             pixels[i][j] = pixels[i][j] / (pixels[i][j] + 1.0);
         }
@@ -49,10 +49,10 @@ void Image::reinhard_tone_mapping() const {
 }
 
 Image Image::apply_reinhard_extended_tone_mapping() const {
-    Image img(width, height);
+    Image img(resX, resY);
 
-    for(int i = 0; i < width * height; i++) {
-        img.pixels[i] = pixels[i] / (1.0 + getLuminance(pixels[i]));
+    for(int i = 0; i < resX * resY; i++) {
+        img.pixels[i] = Color(pixels[i] / (1.0 + pixels[i].getLuminance()));
     }
 
     return img;
@@ -60,20 +60,20 @@ Image Image::apply_reinhard_extended_tone_mapping() const {
 
 double Image::getMaxLuminance() const {
     double maxLuminance = 0.0;
-    for(int i = 0; i < width * height; i++) {
-        const auto luminance = getLuminance(pixels[i]);
+    for(int i = 0; i < resX * resY; i++) {
+        const auto luminance = pixels[i].getLuminance();
         if(luminance > maxLuminance) maxLuminance = luminance;
     }
     return maxLuminance;
 }
 
 cv::Mat Image::toCvMat() const {
-    cv::Mat mat(height, width, CV_64FC3);  // 64-bit float, 3 channels
+    cv::Mat mat(resY, resX, CV_64FC3);  // 64-bit float, 3 channels
 
     for (int i = 0; i < mat.rows; ++i) {
         for (int j = 0; j < mat.cols; ++j) {
             auto& pixel = mat.at<cv::Vec3d>(i, j);
-            Eigen::Vector3d& imgPixel = pixels[i * width + j];
+            Eigen::Vector3d& imgPixel = pixels[i * resX + j];
 
             pixel[0] = imgPixel[2];  // B
             pixel[1] = imgPixel[1];  // G
@@ -140,10 +140,10 @@ Image Image::loadImage(const std::string &filename) {
     Image image(img.cols, img.rows);
 
     // OpenCVの画像データをImageオブジェクトにコピーします。
-    for (int i = 0; i < image.height; i++) {
-        for (int j = 0; j < image.width; j++) {
+    for (int i = 0; i < image.resY; i++) {
+        for (int j = 0; j < image.resX; j++) {
             cv::Vec3b color = img.at<cv::Vec3b>(i, j);
-            image.pixels[i * image.width + j] = Eigen::Vector3d(color[0], color[1], color[2]) / 255.0;
+            image.pixels[i * image.resX + j] = Color(Eigen::Vector3d(color[0], color[1], color[2]) / 255.0);
         }
     }
 

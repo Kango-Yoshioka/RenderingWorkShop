@@ -37,10 +37,10 @@ void sample() {
 
 void roomRenderingSample() {
     const auto room_r = 1e5;
-    const auto floor_color = codeToColor("#f9c89b");
+    const auto floor_color = Color("#f9c89b");
     const std::vector<Body> room_walls {
-            Body(Sphere(room_r, (room_r - 50) * Eigen::Vector3d::UnitX()), Material(codeToColor("#2f5d50"))),
-            Body(Sphere(room_r, -(room_r - 50) * Eigen::Vector3d::UnitX()), Material(codeToColor("#00a3af"))),
+            Body(Sphere(room_r, (room_r - 50) * Eigen::Vector3d::UnitX()), Material(Color("#2f5d50"))),
+            Body(Sphere(room_r, -(room_r - 50) * Eigen::Vector3d::UnitX()), Material(Color("#00a3af"))),
             Body(Sphere(room_r, (room_r - 30) * Eigen::Vector3d::UnitY()), Material(floor_color)),
             Body(Sphere(room_r, -(room_r - 40) * Eigen::Vector3d::UnitY()), Material(floor_color)),
             Body(Sphere(room_r, (room_r - 30) * Eigen::Vector3d::UnitZ()), Material(floor_color)),
@@ -52,7 +52,7 @@ void roomRenderingSample() {
     };
 
     const std::vector<Body> lights {
-            Body(Sphere(5, Eigen::Vector3d(0, 34.8, 0)), Material(codeToColor("#e597b2")))
+            Body(Sphere(5, Eigen::Vector3d(0, 34.8, 0)), Material(Color("#e597b2")))
     };
 
     for(const auto & room_wall : room_walls) {

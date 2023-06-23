@@ -18,7 +18,7 @@ public:
     Camera camera;
     Color bgColor;
 
-    Renderer(const std::vector<Body> &bodies, Camera camera, Color bgColor=Color::Zero());
+    Renderer(const std::vector<Body> &bodies, Camera camera, Color bgColor=Color());
 
     bool hitScene(const Ray &ray, RayHit &hit) const;
 

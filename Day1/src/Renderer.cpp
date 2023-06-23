@@ -36,9 +36,9 @@ bool Renderer::hitScene(const Ray &ray, RayHit &hit) const {
 Image Renderer::render() const {
     Image image(camera.getFilm().resolution.x(), camera.getFilm().resolution.y());
     /// フィルム上のピクセル全てに向けてレイを飛ばす
-    for(int p_y = 0; p_y < image.height; ++p_y) {
-        for(int p_x = 0; p_x < image.width; ++p_x) {
-            const int p_idx = p_y * image.width + p_x;
+    for(int p_y = 0; p_y < image.resY; ++p_y) {
+        for(int p_x = 0; p_x < image.resX; ++p_x) {
+            const int p_idx = p_y * image.resX + p_x;
             Color color;
             Ray ray; RayHit hit;
             camera.filmView(p_x, p_y, ray);

@@ -7,12 +7,16 @@
 
 #include <Eigen/Dense>
 
-using Color = Eigen::Vector3d;
+class Color : public Eigen::Vector3d {
+public:
+    Color();
+    Color(const double &r, const double &g, const double &b);
+    explicit Color(const Eigen::Vector3d &v);
+    explicit Color(const std::string &colorCode);
 
-double getLuminance(const Color &c);
-
-Color changeLuminance(const Color &c, const double &l_out);
-
-Color codeToColor(const std::string &colorCode);
-
+    Color changeLuminance(const double &l_out);
+    double getLuminance() const;
+private:
+    void validateColorValues() const;
+};
 #endif //REFACTORINGIVR_COLOR_H

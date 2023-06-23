@@ -11,14 +11,14 @@
 
 class Image {
 public:
-    int width;
-    int height;
+    int resX;
+    int resY;
 
     Color *pixels;
 
     Image() = default;
 
-    Image(const int &width, const int &height);
+    Image(const int &resX, const int &resY);
 
     ~Image();
 
