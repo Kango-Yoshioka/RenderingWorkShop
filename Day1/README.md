@@ -26,9 +26,9 @@
 このクラスはカメラにまつわるデータを管理しています。例えば、フィルムやカメラの向きなどがあります。focalLengthはカメラとフィルムの距離です。
 ```cpp
 class Camera {
-    double focalLength;
-    Eigen::Vector3d org, right, up;
-    Film film;
+    double m_focalLength;
+    Eigen::Vector3d m_org, m_right, m_up;
+    Film m_film;
 }
 ```
 
@@ -128,7 +128,7 @@ $t$が変化することによって計算される座標がレイの通る道�
 
 ```cpp
 struct Ray {
-    Eigen::Vector3d org;
+    Eigen::Vector3d m_org;
     Eigen::Vector3d dir;
 };
 ```
