@@ -13,8 +13,8 @@ Camera::Camera(Eigen::Vector3d position, const Eigen::Vector3d &dir, const int &
 
     /// thetaからフィルムの空間上における高さを計算
     const double filmHeight = 2.0 * tan(theta / 2.0) * focalLength;
+    std::cout << "^_^" << std::endl;
     film = Film(resolutionHeight, aspectRatio, filmHeight);
-
     /// \カメラのローカル基底ベクトル
     /// カメラの方向ベクトルとy軸方向の単位ベクトルの外積で右向きのベクトルを計算\n
     /// 右向きのベクトルとカメラの方向ベクトルの外積で上向きのベクトルを計算\n

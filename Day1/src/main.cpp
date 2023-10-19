@@ -27,6 +27,7 @@ void sample() {
     const Eigen::Vector3d camdir = Eigen::Vector3d(0, 0, 0) - campos;
 
     const Camera camera(campos, camdir, 320, 9.0 / 16.0, 5);
+    std::cout << "^_^" << std::endl;
 
     /// 背景色はわかりやすく灰色
     const Renderer renderer(bodies, camera, Color(0.5, 0.5, 0.5));

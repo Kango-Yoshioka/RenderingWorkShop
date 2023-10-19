@@ -9,7 +9,7 @@
 
 class Color : public Eigen::Vector3d {
 public:
-    Color();
+    Color() = default;
     Color(const double &r, const double &g, const double &b);
     explicit Color(const Eigen::Vector3d &v);
     explicit Color(const std::string &colorCode);

@@ -6,7 +6,8 @@
 #include <iostream>
 
 Image::Image(const int &resX, const int &resY) : resX(resX), resY(resY) {
-    pixels = new Color[resX * resY];
+    pixels = static_cast<Color*>(calloc(resX * resY, sizeof(Color)));
+    std::cout << "Image was constructed." << std::endl;
 }
 
 Image::~Image() {

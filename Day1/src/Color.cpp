@@ -5,9 +5,8 @@
 #include <iostream>
 #include "Color.h"
 
-Color::Color() : Eigen::Vector3d(Eigen::Vector3d::Zero()) {}
-
 Color::Color(const double &r, const double &g, const double &b) : Eigen::Vector3d(r, g, b) {
+    std::cout << "call Color()" << std::endl;
     validateColorValues();
 }
 
@@ -28,6 +27,7 @@ Color::Color(const std::string &colorCode) {
 }
 
 void Color::validateColorValues() const {
+    std::cout << "call validateColorValues()" << std::endl;
     if (x() < 0.0f || y() < 0.0f || z() < 0.0f) {
         std::cerr << "Invalid color values. Values must be 0 or greater.:\t" << transpose() << std::endl;
         // Perform appropriate error handling

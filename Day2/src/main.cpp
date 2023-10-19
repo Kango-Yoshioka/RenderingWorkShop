@@ -74,11 +74,22 @@ void roomRenderingSample() {
     const Renderer renderer(bodies, camera, Color(0.1, 0.1, 0.1));
     const auto image = renderer.render().apply_reinhard_extended_tone_mapping().apply_gamma_correction();
 
-    const unsigned int samples = 1e4;
+    const unsigned int samples = 1024;
     const auto image2 = renderer._directIlluminationRender(samples).apply_reinhard_extended_tone_mapping().apply_gamma_correction();
 
     image.save("sample_image.png");
     image2.save("sample.png");
+
+    cv::Mat sample = cv::imread("sample.png", cv::IMREAD_COLOR);
+
+    if (sample.empty()) {
+        std::cerr << "Error: Unable to load image." << std::endl;
+        exit(1);
+    }
+
+    cv::Mat denoisedImage;
+    cv::fastNlMeansDenoising(sample, denoisedImage, 10);
+    cv::imwrite("denoised_image.jpg", denoisedImage);
 }
 
 int main() {

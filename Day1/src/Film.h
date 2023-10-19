@@ -8,11 +8,12 @@
 #include "Eigen/Dense"
 #include "Image.h"
 
-struct Film : public Image {
+class Film : public Image {
+public:
     /// 空間上におけるフィルムのサイズ
     Eigen::Vector2d filmSize;
 
-    Film() = default;
+    Film() : Image(0, 0) {};
 
     /**
      *
@@ -22,7 +23,9 @@ struct Film : public Image {
      */
      Film(const int &resolutionHeight, const double &aspectRatio, const double &filmHeight)
      : Image(resolutionHeight * aspectRatio, resolutionHeight),
-     filmSize(Eigen::Vector2d{filmHeight * aspectRatio, filmHeight}) {}
+     filmSize(Eigen::Vector2d{filmHeight * aspectRatio, filmHeight}) {
+         std::cout << "Film was constructed." << std::endl;
+     }
 
      Eigen::Vector2d pixelLocalPosition(const unsigned int &x, const unsigned int &y) const {
          return Eigen::Vector2d{(x + 0.5) / resX, (y + 0.5) / resY};
